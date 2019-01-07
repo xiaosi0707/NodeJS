@@ -12,6 +12,7 @@
 let http = require('http')
 let fs = require('fs')
 let template = require('art-template')
+let url = require('url')
 
 // 模拟数据 - 评论
 let commentsData = [
@@ -37,10 +38,25 @@ let commentsData = [
     }
 ]
 
+/*
+* 表单提交的数据处理：/pinglun?name=刘备&message=二位贤弟啊，我刘玄德对不住你们哇
+*   对于这种表单提交的请求路径，由于URL中有用户自己写的内容
+*   所以我们不可能通过判断完整的URL地址，来处理这个请求
+*
+*   我们只需要判断，如果你的请求地址是不是/pinglun其实就可以了
+*
+* */
+
 // 简写
 http.createServer((req, res) => {
-    let url = req.url
-    if (url === '/') { // 首页
+    // url.parse()方法，将路径解析为一个方便操作的对象；
+    // 第一个参数，要解析的URL地址；
+    // 第二个参数为true可以直接将查询字符串转为一个对象
+    let parseObj = url.parse(req.url, true)
+
+    let { pathname } = parseObj
+
+    if (pathname === '/') { // 首页
         fs.readFile('./views/index.html', (err, data) => {
             if (err) return res.end('404 Not Found')
             // art-template 绑定数据
@@ -49,18 +65,30 @@ http.createServer((req, res) => {
             })
             res.end(htmlStr)
         })
-    } else if (url === '/post') { // 发布留言
+    } else if (pathname === '/post') { // 发布留言
         fs.readFile('./views/post.html', (err,data) => {
             if (err) return res.end('404 Not Found')
             res.end(data)
         })
-    }  else if (url.indexOf('/public/') === 0) {
+    } else if (pathname === '/pinglun') {
+
+        let { query } = parseObj
+        // 使用url模块中parse方法，把请求路径中的查询字符串解析成了一个对象
+        res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+        res.end(JSON.stringify(query))
+        /*
+        * 接下来要做的：
+        *   1、获取表单提交的数据
+        *   2、生成日期字段到数据中
+        *   3、重定向到首页
+        * */
+    }  else if (pathname.indexOf('/public/') === 0) {
         /*
         * 统一处理静态资源：
         *   如果请求路径是以/public/开头的，则我认为你要获取public目录中的某个资源
         *   所以我们可以把请求路径当作文件路径来直接进行读取
         * */
-        fs.readFile(`.${url}`, (err, data) => {
+        fs.readFile(`.${pathname}`, (err, data) => {
             if (err) return res.end('404 Not Found')
             res.end(data)
         })
