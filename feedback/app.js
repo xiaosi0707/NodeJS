@@ -11,6 +11,31 @@
 * */
 let http = require('http')
 let fs = require('fs')
+let template = require('art-template')
+
+// 模拟数据 - 评论
+let commentsData = [
+    {
+        name: '孙权',
+        message: '刘备向我借荆州，各位意下如何？',
+        dataTime: new Date().toLocaleString()
+    },
+    {
+        name: '曹操',
+        message: '我要去攻打东吴，各位有没有什么好的建议啊？',
+        dataTime: new Date().toLocaleString()
+    },
+    {
+        name: '赵云',
+        message: '主公，益州已占领，就不要再纵容手下人抢老百姓的东西啦...',
+        dataTime: new Date().toLocaleString()
+    },
+    {
+        name: '周公瑾',
+        message: '主公，给我三万精兵，让我去会会曹操，我定可以凯旋归来...',
+        dataTime: new Date().toLocaleString()
+    }
+]
 
 // 简写
 http.createServer((req, res) => {
@@ -18,7 +43,11 @@ http.createServer((req, res) => {
     if (url === '/') { // 首页
         fs.readFile('./views/index.html', (err, data) => {
             if (err) return res.end('404 Not Found')
-            res.end(data)
+            // art-template 绑定数据
+            let htmlStr = template.render(data.toString(), {
+                commentsData
+            })
+            res.end(htmlStr)
         })
     } else if (url === '/post') { // 发布留言
         fs.readFile('./views/post.html', (err,data) => {
