@@ -6,3 +6,15 @@
 html, body {
     width: 100%;
 }
+.custom-header {
+    margin: 36px auto;
+
+}
+.custom-header small {
+    float: right;
+    font-size: 18px;
+    margin-top: 24px;
+}
+.custom-container a {
+    margin-top: 24px;
+}

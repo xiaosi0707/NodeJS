@@ -20,7 +20,12 @@ http.createServer((req, res) => {
             if (err) return res.end('404 Not Found')
             res.end(data)
         })
-    } else if (url.indexOf('/public/') === 0) {
+    } else if (url === '/post') { // 发布留言
+        fs.readFile('./views/post.html', (err,data) => {
+            if (err) return res.end('404 Not Found')
+            res.end(data)
+        })
+    }  else if (url.indexOf('/public/') === 0) {
         /*
         * 统一处理静态资源：
         *   如果请求路径是以/public/开头的，则我认为你要获取public目录中的某个资源
