@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<div>
+    <h1>{{ title }}</h1>
+    <div>
+        <p>
+            {{ each files }} <p><a href="">{{ $value }}</a></p> {{ /each }}
+        </p>
+    </div>
+</div>
+</body>
+</html>
