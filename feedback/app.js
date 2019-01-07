@@ -70,18 +70,39 @@ http.createServer((req, res) => {
             if (err) return res.end('404 Not Found')
             res.end(data)
         })
-    } else if (pathname === '/pinglun') {
+    } else if (pathname === '/pinglun') { // 处理get提交过来的数据
 
         let { query } = parseObj
         // 使用url模块中parse方法，把请求路径中的查询字符串解析成了一个对象
-        res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-        res.end(JSON.stringify(query))
+        //res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+        // 一次请求，只能对应一次响应
+        // res.end(JSON.stringify(query))
+
         /*
         * 接下来要做的：
         *   1、获取表单提交的数据
         *   2、生成日期字段到数据中
         *   3、重定向到首页
         * */
+        query.dataTime = `2017-01-07 17:32:56`
+        commentsData.unshift(query)
+
+
+        // 服务器这个时候已经把数据存储好了，接下来就是重定向到首页看到最新的留言数据
+        /*
+        *如何通过服务端让客户端重定向？
+            1、状态码这是为302临时重定向
+                statusCode
+            2、在相应头中通过Location告诉客户端往哪重定向
+                setHeader
+            如果客户端发现收到服务器的响应状态码是302，就会自动去响应头中找location，然后对该地址发起新的请求
+            所以你就能看到客户端自动跳转了
+        * */
+        res.statusCode = 302
+        res.setHeader('Location', '/')
+        res.end()
+
+
     }  else if (pathname.indexOf('/public/') === 0) {
         /*
         * 统一处理静态资源：
