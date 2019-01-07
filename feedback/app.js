@@ -15,7 +15,7 @@ let fs = require('fs')
 // 简写
 http.createServer((req, res) => {
     let url = req.url
-    if (url === '/') {
+    if (url === '/') { // 首页
         fs.readFile('./views/index.html', (err, data) => {
             if (err) return res.end('404 Not Found')
             res.end(data)
@@ -27,6 +27,11 @@ http.createServer((req, res) => {
         *   所以我们可以把请求路径当作文件路径来直接进行读取
         * */
         fs.readFile(`.${url}`, (err, data) => {
+            if (err) return res.end('404 Not Found')
+            res.end(data)
+        })
+    } else { // 找不到 - 404处理
+        fs.readFile('./views/404.html', (err, data) => {
             if (err) return res.end('404 Not Found')
             res.end(data)
         })
