@@ -2011,13 +2011,13 @@ req.query
 
 Express 中没有内置处理post请求的API的，需要安装一个中间件```body-parser```
 
-### 安装：
+### 安装
 
 ```javascript
 npm install body-parser --save
 ```
 
-### 配置：
+### 配置
 
 ```javascript
 var express = require('express')
@@ -2160,7 +2160,7 @@ app.listen(7000, () => {
 
 ```
 
-
+### [GitHub](https://github.com/xiaosi0707/NodeJS/commit/86337f9e676294572097d4940ace983307bd33b9)
 
 # 其它
 
