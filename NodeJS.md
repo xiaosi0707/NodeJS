@@ -1819,7 +1819,7 @@ app.post('/', (req, res) => {
 
 ### 静态服务
 
-#### 开发资源 - 第一种方式：
+#### 开发资源 - 第一种方式
 
 ```javascript
 /**
@@ -1845,7 +1845,7 @@ app.use('/public/', express.static('./public/'))
 
 ```
 
-#### 开放资源 - 第二种方式：
+#### 开放资源 - 第二种方式
 
 ```javascript
 /**
@@ -1871,7 +1871,7 @@ app.use(express.static('./public/'))
 
 ```
 
-#### 开放资源 - 第三种方式：
+#### 开放资源 - 第三种方式
 
 ```javascript
 /**
@@ -1894,6 +1894,105 @@ app.listen(7000, () => {
 
 // 开放资源 - 下面情况你可以把 aaa 理解为路径的别名，则需要通过 - 这样(http://localhost:7000/aaa/img/同学们听我说.jpg)的方式就可以访问了
 app.use('/aaa/', express.static('./public/'))
+```
+
+## art-template配置及使用
+
+### 官网[art-template](https://aui.github.io/art-template/)
+
+### 安装
+
+```shell
+npm install art-template --save
+npm install express-art-express --save
+```
+
+### 配置
+
+```shell
+app.engine('html', require('express-art-template'))
+```
+
+### 使用
+
+```javascript
+app.get('/', (req, res) => {
+    // express 默认会去项目中的views目录查找demo.html
+    res.render('demo.html', {
+        title: '管理系统'
+    })
+})
+```
+
+### 自定义默认的views目录
+
+```javascript
+// 第一个参数就是写死的 views
+// 第二个参数是更改后的路径
+app.set('views', 要更改的路径)
+```
+
+
+
+### 示例代码
+
+目录结构：
+
+- /
+  - views/
+    - demo.html
+  - app.js
+
+源        码：
+
+```javascript
+/**
+ @Author：Wyunfei
+ @Date：2019/1/10/11:54
+ @FileName: app.js
+ */
+let express = require('express')
+
+let app = express()
+
+/*
+* 配置使用art-template模板引擎
+*   第一个参数，表示，当渲染以.art结尾的文件时，使用art-template模板引擎
+*       这里的后缀也可以改为html，这样的话加载的文件就是HTML文件了
+*
+*   express-art-template 是专门用来在Express中把 art-template 整合到Express中的
+*   虽然外面不需要加载art-template但是也需要安装，因为express-art-template依赖于art-template
+* */
+app.engine('html', require('express-art-template'))
+
+/*
+* Express 为 Response响应对象提供了一个方法render
+* render 方法默认是不能使用的，但是如果配置了模板引擎就可以使用了
+* 使用方式：
+*   res.render('html模板名', { 模板数据 })
+*   第一个参数不能写路径，默认会去项目中的views目录中去查找模板
+*   也就是说Express有个约定，开发人员需要把所有的视图文件放在views目录中
+*
+*   如果想要修改默认的views目录，则可以这么做：
+*       app.set('views', render函数的默认路径)
+*       第一个参数就是写死的 views
+*       第二个参数是更改后的路径
+*
+* */
+
+app.get('/', (req, res) => {
+    res.render('demo.html', {
+        title: '管理系统'
+    })
+})
+app.get('/post', (req, res) => {
+    res.send('/post')
+})
+
+app.listen(7000, () => {
+    console.log('running at http://localhost:7000/')
+})
+
 ```
 
 

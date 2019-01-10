@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--
+        / 根路径的意思，浏览器发出请求后会自动把http://127.0.0.1:7000拼上的
+
+        摒弃文件路径思维，服务端开发要把路径全部想象成URL地址
+
+     -->
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <link rel="stylesheet" href="/public/css/main.css">
+</head>
+<body>
+<div class="header container custom-header">
+    <div class="page-header">
+        <h1> 首页 <small class="">NodeJS 留言板</small></h1>
+
+    </div>
+    <script src="/public/js/main.js"></script>
+</div>
+<div class="container custom-container">
+    <ul class="list-group">
+        {{ each commentsData }}
+        <li class="list-group-item list-group-item-action">{{ $value.name }}说："{{ $value.message }}" <span class="custom-right">{{ $value.dataTime }}</span></li>
+        {{ /each }}
+    </ul>
+    <a class="btn btn-primary" href="/post">发表留言</a>
+</div>
+</body>
+</html>
