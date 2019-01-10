@@ -6,7 +6,14 @@
 let express = require('express')
 
 let app = express()
+let bodyParser = require('body-parser')
 
+// 配置body-parser中间件(插件),专门用来解析post请求
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 // 模拟数据 - 评论
 let commentsData = [
@@ -49,6 +56,9 @@ app.engine('html', require('express-art-template'))
 // 开放资源
 app.use('/public/', express.static('./public/'))
 
+
+
+
 /*
 * Express 为 Response响应对象提供了一个方法render
 * render 方法默认是不能使用的，但是如果配置了模板引擎就可以使用了
@@ -73,12 +83,22 @@ app.get('/post', (req, res) => {
     res.render('post.html')
 })
 
-app.get('/pinglun', (req, res) => {
-    let { query } = req
-    query.dataTime = new Date().toLocaleString()
-    commentsData.unshift(query)
+
+// 当以 post 请求 /post 路径的时候，执行指定的处理函数
+// 这样的话我们就可以利用不同的请求方式，让一个路径使用多次
+app.post('/post', (req, res) => {
+    console.log('收到表单的post请求了...')
+
+    // 1、获取表单 提交 过来的数据
+    // 2、处理
+    // 3、发送响应
+    // req.query 只能拿到get请求方式的数据
+    let { body } = req
+    body.dataTime = new Date().toLocaleString()
+    commentsData.unshift(body)
     // 重定向到首页
     res.redirect('/')
+
 })
 
 app.listen(7000, () => {
