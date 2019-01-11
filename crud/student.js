@@ -27,8 +27,20 @@ exports.find = (callback) => {
     })
 }
 // 添加学生
-exports.save = () => {
-
+exports.save = (student, callback) => {
+    fs.readFile(dbPath, (err, data) => {
+        if (err) return callback(err)
+        let students = JSON.parse(data).students
+        student.id = (students[students.length - 1].id) + 1 // 处理 id， 保证唯一
+        students.push(student)
+        let result = JSON.stringify({
+            students
+        })
+        fs.writeFile(dbPath, result, (err) => {
+            if (err) return callback(err) // 错误就是把错误对象传递给它
+            callback(null) // 成功就没错，所以是null
+        })
+    })
 }
 // 更新学生
 exports.update = () => {

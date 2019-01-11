@@ -40,6 +40,10 @@ router.post('/students/create', (req, res) => {
     * */
     console.log(req.body)
     let { body } = req
+    Students.save(body, (err) => {
+        if (err) return res.status(500).send('Server error')
+        res.redirect('/students')
+    })
 
 })
 router.get('/students/edit', (req, res) => {
