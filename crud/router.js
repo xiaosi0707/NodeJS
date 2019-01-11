@@ -7,18 +7,17 @@ let fs = require('fs')
 
 // 专门用来包装路由的
 let express = require('express')
+let Students = require('./student')
 
 // 1、创建一个路由容器
 let router = express.Router()
 
 // 2、把路由都挂载到 router 路由容器中
 router.get('/students', (req, res) => {
-    // readFile第二个参数是可选的，传入utf-8 就是告诉它把读取到的文件直接按照utf-8编码转成我们能认识的字符
-    // 还可以通过data.toString()的方式进行转换
-    fs.readFile('db.json', 'utf-8', (err, data) => {
+    Students.find((err, students) => {
         if (err) return res.status(500).send('Server error')
         res.render('index.html', {
-            students: JSON.parse(data).students
+            students
         })
     })
 })
