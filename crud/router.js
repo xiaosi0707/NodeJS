@@ -22,19 +22,34 @@ router.get('/students', (req, res) => {
         })
     })
 })
-router.get('/students/new', (req, res) => {
+router.get('/students/create', (req, res) => {
+    res.render('create.html')
+})
+router.post('/students/create', (req, res) => {
+    /*
+    * 1、 获取表单数据
+    * 2、 处理
+    *       将提交过来的数据保存到db.json文件中用以持久化
+    * 3、发送响应
+    *
+    * 先读取出来，字符串转对象
+    * 往对象中push 数据
+    * 再把对象转为字符串
+    * 最后把字符串再次写入文件
+    *
+    *
+    * */
+    console.log(req.body)
+    let { body } = req
 
 })
-router.post('/students/new', (req, res) => {
+router.get('/students/edit', (req, res) => {
 
 })
-router.get('/', (req, res) => {
+router.post('/students/edit', (req, res) => {
 
 })
-router.get('/', (req, res) => {
-
-})
-router.get('/', (req, res) => {
+router.get('/students/delete', (req, res) => {
 
 })
 

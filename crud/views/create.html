@@ -69,7 +69,7 @@
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Dashboard</h1>
+            <h1 class="page-header">添加学生</h1>
 
             <div class="row placeholders">
                 {{ each students }}
@@ -81,31 +81,34 @@
                 {{ /each }}
             </div>
 
-            <h2 class="sub-header">Section title</h2>
-            <a href="/students/create" class="btn btn-success">添加学生</a>
+
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>年龄</th>
-                        <th>爱好</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{ each students }}
-                    <tr>
-                        <td>{{ $value.id }}</td>
-                        <td>{{ $value.name }}</td>
-                        <td>{{ $value.gender }}</td>
-                        <td>{{ $value.age }}</td>
-                        <td>{{ $value.hobbies }}</td>
-                    </tr>
-                    {{ /each }}
-                    </tbody>
-                </table>
+                <form action="/students/create" method="post">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">姓名</label>
+                        <input type="text" class="form-control" name="name" id="exampleInputEmail1" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="">性别</label>
+                        <div>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="inlineRadio1" value="0"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="inlineRadio2" value="1"> 女
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">年龄</label>
+                        <input type="number" class="form-control" id="exampleInputFile" name="age">
+                    </div>
+                    <div class="form-group">
+                        <label>爱好</label>
+                        <input type="text" class="form-control" name="hobbies">
+                    </div>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </form>
             </div>
         </div>
     </div>

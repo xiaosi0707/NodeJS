@@ -13,12 +13,24 @@
  */
 let express = require('express')
 let app = express()
+let bodyParser = require('body-parser')
 let router = require('./router.js')
+
+
+// 配置body-parser一定要在 app.use(router) 挂载路由之前
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+
 
 // 4、把路由容器挂载到 app 服务中
 app.use(router)
 
 app.engine('html', require('express-art-template'))
+
+
+
 
 // 设置开放目录
 app.use('/node_modules/', express.static('./node_modules/'))
