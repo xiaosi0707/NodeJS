@@ -89,14 +89,22 @@ exports.update = (student, callback) => {
             callback(null) // 成功就没错，所以是null
         })
     })
-
-
-
-
-
 }
 
 // 删除学生
-exports.delete = () => {
-
+exports.delete = (id, callback) => {
+    fs.readFile(dbPath, (err, data) => {
+        if (err) return  callback(err)
+        let arrStu = JSON.parse(data).students
+        let arrResult = arrStu.filter(item => {
+            return item.id !== id
+        })
+        let strResult = JSON.stringify({
+            students: arrResult
+        })
+        fs.writeFile(dbPath, strResult, (err) => {
+            if (err) return callback(err)
+            callback(null)
+        })
+    })
 }

@@ -1,1 +1,18 @@
-{"students":[{"id":1,"name":"赵自动","gender":0,"age":"22","hobbies":"吃饭、睡觉、打豆豆"},{"id":2,"name":"周瑜","gender":0,"age":22,"hobbies":"交朋友、打仗、孙策"},{"id":3,"name":"孙策","gender":0,"age":22,"hobbies":"打猎、周瑜、争地盘"},{"id":4,"name":"曹操","gender":0,"age":48,"hobbies":"挟天子、令诸侯、争地盘、好女色"},{"id":5,"name":"刘备","gender":0,"age":47,"hobbies":"占小便宜、逃跑、不管老婆"},{"id":6,"name":"吕布","gender":0,"age":22,"hobbies":"随便认爹、打仗、争地盘"},{"name":"asdasdasdasd","gender":"1","age":"1212","hobbies":"adasdsad","id":7},{"name":"大萨达所多撒","gender":"1","age":"121212","hobbies":"1sadasd","id":8},{"name":"大萨达所多撒","gender":"1","age":"121212","hobbies":"1sadasd","id":9}]}
+{
+  "students": [
+    {
+      "id": 3,
+      "name": "孙策",
+      "gender": 0,
+      "age": 22,
+      "hobbies": "打猎、周瑜、争地盘"
+    },
+    {
+      "id": 6,
+      "name": "吕布",
+      "gender": 0,
+      "age": 22,
+      "hobbies": "随便认爹、打仗、争地盘"
+    }
+  ]
+}
