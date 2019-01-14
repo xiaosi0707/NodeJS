@@ -38,7 +38,6 @@ router.post('/students/create', (req, res) => {
     *
     *
     * */
-    console.log(req.body)
     let { body } = req
     Students.save(body, (err) => {
         if (err) return res.status(500).send('Server error')
@@ -47,7 +46,19 @@ router.post('/students/create', (req, res) => {
 
 })
 router.get('/students/edit', (req, res) => {
-
+    /*
+    * 1、客户端列表处理链接问题，需要有id参数
+    * 2、获取要编辑学生的 id
+    * 3、渲染编辑页面
+    *   a、根据id查找学生信息
+    *   b、使用模板显然数据
+    * */
+    Students.findById(parseInt(req.query.id), (err, student) => {
+        if (err) return res.status(500).send('Server error')
+        res.render('edit.html', {
+            student
+        })
+    })
 })
 router.post('/students/edit', (req, res) => {
 
