@@ -61,7 +61,18 @@ router.get('/students/edit', (req, res) => {
     })
 })
 router.post('/students/edit', (req, res) => {
-
+    /**
+     * 1、获取表单数据
+     *      req.body
+     * 2、更新
+     *      Studentss.update()
+     * 3、发送详情
+     */
+    Students.update(req.body, (err, data) => {
+        if (err) return res.status(500).send('Server error')
+        res.redirect('/students')
+    })
+    console.log(req.body)
 })
 router.get('/students/delete', (req, res) => {
 

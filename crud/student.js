@@ -38,7 +38,7 @@ exports.findById = (id, callback) => {
         if (err) return callback(err) // 如果有错, callback
         let students = JSON.parse(data).students
         let stu = students.find(item => {
-            return item.id === id
+            return parseInt(item.id) === id
         })
         callback(null, stu) // 如果没错，err 就是 null，第二个就是正确结果 ；调用的时候可以根据第一个参数来来知道是不是有错
     })
@@ -67,25 +67,32 @@ exports.update = (student, callback) => {
         if (err) {
             return callback(err)
         }
-    })
-    let students = JSON.parse(data).students
+        let students = JSON.parse(data).students
 
-    // 你要修改谁，就需要把谁找出来 - 根据 id
-    let stu = students.find((item) => {
-        return item.id === student.id
+        // 保存的时候把 id 转为 Number
+        student.id = parseInt(student.id)
+
+        // 你要修改谁，就需要把谁找出来 - 根据 id
+        let stu = students.find((item) => {
+            return item.id === student.id
+        })
+
+        for(let key in student) {
+            stu[key] = student[key]
+        }
+
+        let result = JSON.stringify({
+            students
+        })
+        fs.writeFile(dbPath, result, (err) => {
+            if (err) return callback(err) // 错误就是把错误对象传递给它
+            callback(null) // 成功就没错，所以是null
+        })
     })
 
-    for(let key in student) {
-        stu[key] = student[key]
-    }
 
-    let result = JSON.stringify({
-        students
-    })
-    fs.writeFile(dbPath, result, (err) => {
-        if (err) return callback(err) // 错误就是把错误对象传递给它
-        callback(null) // 成功就没错，所以是null
-    })
+
+
 
 }
 
