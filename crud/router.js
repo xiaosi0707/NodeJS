@@ -39,8 +39,10 @@ router.post('/students/create', (req, res) => {
     *
     * */
     let { body } = req
-    Students.save(body, (err) => {
-        if (err) return res.status(500).send('Server error')
+    new Students(body).save(err => {
+        if (err) {
+            return res.status(500).send('Server Error')
+        }
         res.redirect('/students')
     })
 

@@ -15,5 +15,8 @@
     "bootstrap": "^3.3.7",
     "express": "^4.16.4",
     "express-art-template": "^1.0.1"
+  },
+  "devDependencies": {
+    "mongoose": "^5.4.9"
   }
 }
