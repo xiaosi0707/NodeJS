@@ -82,7 +82,8 @@ router.get('/students/delete', (req, res) => {
      * 2、根据获取到的 id 删除操作
      * 3、根据操作结果发送响应
      */
-    Students.delete(parseInt(req.query.id), (err ,data) => {
+    let id = req.query.id.replace(/"/g, "")
+    Students.findByIdAndRemove(id, (err ,data) => {
         if (err) return res.status(500).send('Server error')
         res.redirect('/students')
     })
