@@ -55,7 +55,7 @@ router.get('/students/edit', (req, res) => {
     *   a、根据id查找学生信息
     *   b、使用模板显然数据
     * */
-    Students.findById(parseInt(req.query.id), (err, student) => {
+    Students.findById(req.query.id.replace(/"/g, ""), (err, student) => {
         if (err) return res.status(500).send('Server error')
         res.render('edit.html', {
             student
@@ -70,11 +70,11 @@ router.post('/students/edit', (req, res) => {
      *      Studentss.update()
      * 3、发送详情
      */
-    Students.update(req.body, (err, data) => {
+    let id = req.body.id.replace(/"/g, "")
+    Students.findByIdAndUpdate(id, req.body, (err, data) => {
         if (err) return res.status(500).send('Server error')
         res.redirect('/students')
     })
-    console.log(req.body)
 })
 router.get('/students/delete', (req, res) => {
     /**
